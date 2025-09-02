@@ -76,6 +76,9 @@ dialog span {
   transition: background-color 0.25s;
   border-radius: 9e9rem;
 }
+dialog span {
+  cursor: pointer;
+}
 dialog span:hover {
   background-color: red;
 }
