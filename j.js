@@ -12,14 +12,24 @@ const keys = Object.keys(bustops)
 const startbusstopnum = keys[Math.round(Math.random() * keys.length)]
 const endbusstopnum = keys[Math.floor(Math.random() * keys.length)]
 
+let route = `${bustops[startbusstopnum][0]}`
+
 busstoph1s[0].innerText = bustops[startbusstopnum][0]
 busstoph1s[1].innerText = bustops[endbusstopnum][0]
 
 if (bustops[startbusstopnum][1].some(r => bustops[endbusstopnum][1].includes(r))) {location.reload()}
 
 function addnewbusstop(stopnum) {
+  route += ` → ${bustops[stopnum][0]}`
+  console.log(route)
   if (stopnum == endbusstopnum) {
-    dialog.innerHTML = `<h1 style="font-family: sans-serif">You have reached the destination!</h1><br><button onclick='location.reload()'>Restart</button>`
+    dialog.innerHTML = `
+      <h1 style="font-family: sans-serif">
+        You have reached the destination!<br>
+        Your route: ${route} <button onclick="navigator.clipboard.writeText('${route}')">Copy</button>
+      </h1>
+      <button onclick='location.reload()'>Restart</button>
+    `
     return
   }
   dialog.close()
@@ -43,12 +53,12 @@ function showbusroute(busnumber) {
   dialog.showModal()
   dialog.querySelector("h1").innerText = busnumber
   dialogdiv.innerHTML = ""
-  console.log(busroutes[busnumber]["routes"])
   busroutes[busnumber]["routes"].forEach(lap => {
     lap.forEach(stop => {
       dialogdiv.innerHTML += `<button onclick="addnewbusstop('${stop}')">${bustops[stop][0]}</button>`
     })
   })
+  route += ` → ${busnumber}`
 }
 
 window.showbusroute = showbusroute
