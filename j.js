@@ -13,6 +13,7 @@ const startbusstopnum = keys[Math.round(Math.random() * keys.length)]
 const endbusstopnum = keys[Math.floor(Math.random() * keys.length)]
 
 let route = `${bustops[startbusstopnum][0]}`
+let currentbus
 
 busstoph1s[0].innerText = bustops[startbusstopnum][0]
 busstoph1s[1].innerText = bustops[endbusstopnum][0]
@@ -20,7 +21,7 @@ busstoph1s[1].innerText = bustops[endbusstopnum][0]
 if (bustops[startbusstopnum][1].some(r => bustops[endbusstopnum][1].includes(r))) {location.reload()}
 
 function addnewbusstop(stopnum) {
-  route += ` → ${bustops[stopnum][0]}`
+  route += ` → ${currentbus} → ${bustops[stopnum][0]}`
   console.log(route)
   if (stopnum == endbusstopnum) {
     dialog.innerHTML = `
@@ -58,7 +59,7 @@ function showbusroute(busnumber) {
       dialogdiv.innerHTML += `<button onclick="addnewbusstop('${stop}')">${bustops[stop][0]}</button>`
     })
   })
-  route += ` → ${busnumber}`
+  currentbus = busnumber
 }
 
 window.showbusroute = showbusroute
