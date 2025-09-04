@@ -4,6 +4,9 @@
   font-weight: normal;
   font-style: normal;
 }
+* {
+  font-size: 1rem;
+} 
 html, body {
   margin: 0;
   padding: 0;
@@ -13,6 +16,31 @@ html, body {
   width: 100%;
   height: 100%; /* Important */
 }
+
+/* leaflet */
 .leaflet-control {
   display: none;
+}
+.leaflet-popup-content {
+  font-family: "LTAIdentity", sans-serif;
+}
+
+/* button */
+button {
+  background-color: hsl(76, 59%, 53%);
+  color: black;
+  border: none;
+  margin: 0 0.125rem;
+  transition: background-color 0.25s;
+  font-family: "LTAIdentity", sans-serif;
+  border-radius: 9e9rem;
+}
+button:hover {
+  background-color: hsl(76, 59%, 70%);
+}
+button:active {
+  background-color: hsl(76, 59%, 36%);
+}
+button:disabled {
+  background-color: hsl(76, 30%, 53%);
 }
