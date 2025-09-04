@@ -45,18 +45,6 @@ async function main() {
   
   startMarker.on("popupopen", attachButtonListeners)
   endMarker.on("popupopen", attachButtonListeners)
-  startMarker.on("popupclose", () => {
-    if (!routeaddedbyclick) {
-      map.removeLayer(routepath)
-      routepath = undefined
-    }
-  })
-  endMarker.on("popupclose", () => {
-    if (!routeaddedbyclick) {
-      map.removeLayer(routepath)
-      routepath = undefined
-    }
-  })
 
   function attachButtonListeners() {
     const buttons = document.querySelectorAll("button")
@@ -72,7 +60,6 @@ async function main() {
       })
       button.addEventListener("click", () => {
         triggeredbyclick = true
-        routeaddedbyclick = true
         map.closePopup()
       })
     })
