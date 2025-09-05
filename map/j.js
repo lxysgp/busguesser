@@ -63,7 +63,6 @@ async function main() {
         const busstops = (services[button.textContent].routes[1]) ? (services[button.textContent].routes[0]).concat(services[button.textContent].routes[1]) : services[button.textContent].routes[0]
         busstops.forEach(busstopnum => {
           const busstop = {
-            number: stops.features.filter(feat => feat.id == busstopnum).id,
             name: stops.features.filter(feat => feat.id == busstopnum)[0].properties.name,
             services: stops.features.filter(feat => feat.id == busstopnum)[0].properties.services,
             location: stops.features.filter(feat => feat.id == busstopnum)[0].geometry.coordinates
