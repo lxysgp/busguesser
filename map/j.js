@@ -30,8 +30,8 @@ async function main() {
 
   const map = L.map('map').setView([1.3521, 103.8198], 12)
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map)
-  const startMarker = L.marker([startbusstop.location[1], startbusstop.location[0]]).addTo(map)
-  const endMarker = L.marker([endbusstop.location[1], endbusstop.location[0]]).addTo(map)
+  const startMarker = L.circleMarker([startbusstop.location[1], startbusstop.location[0]],{color: "red"}).addTo(map)
+  const endMarker = L.circleMarker([endbusstop.location[1], endbusstop.location[0]],{color: "red"}).addTo(map)
 
   startMarker.bindPopup(`
     <div>${startbusstop.name}<br>${showbuses(startbusstop.services)}</div>
@@ -68,7 +68,7 @@ async function main() {
             services: stops.features.filter(feat => feat.id == busstopnum)[0].properties.services,
             location: stops.features.filter(feat => feat.id == busstopnum)[0].geometry.coordinates
           }
-          const busstopmarker = L.marker([busstop.location[1],busstop.location[0]]).addTo(map)
+          const busstopmarker = L.circleMarker([busstop.location[1],busstop.location[0]]).addTo(map)
           busstopmarker.bindPopup(`
             <div>${busstop.name}<br>${showbuses(busstop.services)}</div>
           `)
