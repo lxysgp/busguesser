@@ -3,9 +3,9 @@ async function main() {
   const services = await fetch("https://data.busrouter.sg/v1/services.json").then(res => res.json())
   const stops = await fetch("https://data.busrouter.sg/v1/stops.geojson").then(res => res.json())
   
-  console.log(routes)   // routes data
+  // console.log(routes)   // routes data
   // console.log(services) // services data
-  // console.log(stops["features"])    // stops data
+  // console.log(stops)    // stops data
 
   const startindex = Math.floor(Math.random() * stops["features"].length)
   const endindex = Math.floor(Math.random() * stops["features"].length)
@@ -23,8 +23,8 @@ async function main() {
     services: stops.features[endindex].properties.services
   }
 
-  // console.log(startbusstop.services)
-  // console.log(endbusstop.services)
+  // console.log(startbusstop)
+  // console.log(endbusstop)
 
   if (startbusstop.services.some(r => endbusstop.services.includes(r))) {location.reload()}
 
@@ -60,6 +60,20 @@ async function main() {
       })
       button.addEventListener("click", () => {
         triggeredbyclick = true
+        const busstops = (services[button.textContent].routes[1]) ? (services[button.textContent].routes[0]).concat(services[button.textContent].routes[1]) : services[button.textContent].routes[0]
+        busstops.forEach(busstopnum => {
+          const busstop = {
+            number: stops.features.filter(feat => feat.id == busstopnum).id,
+            name: stops.features.filter(feat => feat.id == busstopnum)[0].properties.name,
+            services: stops.features.filter(feat => feat.id == busstopnum)[0].properties.services,
+            location: stops.features.filter(feat => feat.id == busstopnum)[0].geometry.coordinates
+          }
+          const busstopmarker = L.marker([busstop.location[1],busstop.location[0]]).addTo(map)
+          busstopmarker.bindPopup(`
+            <div>${busstop.name}<br>${showbuses(busstop.services)}</div>
+          `)
+          busstopmarker.on("popupopen", attachButtonListeners)
+        })
         map.closePopup()
       })
     })
@@ -69,7 +83,6 @@ async function main() {
     const matches = routes.features.filter(feat => feat.properties.number == num)
     if (matches.length == 0) return null
   
-    // Flatten all coordinates into one array
     const multiCoords = matches.map(feat => feat.geometry.coordinates)
   
     return {
