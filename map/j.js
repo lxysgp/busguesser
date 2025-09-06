@@ -41,7 +41,6 @@ async function main() {
   `)
 
   let routepath
-  let routeaddedbyclick
   
   startMarker.on("popupopen", attachButtonListeners)
   endMarker.on("popupopen", attachButtonListeners)
