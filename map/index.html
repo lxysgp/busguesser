@@ -1,16 +1,95 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BusHopper</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <link rel="stylesheet" href="c.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BusGuesser — Map Mode</title>
+
+  <!-- Leaflet (CDN, no API keys) -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""
+  />
+  <script
+    src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""
+    defer
+  ></script>
+
+  <link rel="stylesheet" href="./c.css" />
 </head>
 <body>
-  <h1>BusHopper</h1>
-  <div id="map"></div>
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="j.js"></script>
+  <header class="topbar">
+    <h1>🚌 BusGuesser <span class="mode-tag">Map Mode</span></h1>
+    <div class="top-actions">
+      <button id="themeToggle" class="btn" title="Toggle theme">🌓</button>
+      <button id="helpBtn" class="btn" title="How to play">❔</button>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="panel">
+      <div class="controls">
+        <div class="control">
+          <label for="startInput">Start</label>
+          <input id="startInput" class="input" placeholder="Search start stop…" />
+        </div>
+        <div class="control">
+          <label for="endInput">End</label>
+          <input id="endInput" class="input" placeholder="Search end stop…" />
+        </div>
+        <div class="buttons">
+          <button id="randomBtn" class="btn primary" title="Random pair (R)">🎲 Random</button>
+          <button id="swapBtn" class="btn" title="Swap (S)">⇆ Swap</button>
+          <button id="locateBtn" class="btn" title="Use my location for Start (L)">📍 Near me</button>
+          <button id="shareBtn" class="btn" title="Shareable link">🔗 Share</button>
+        </div>
+      </div>
+
+      <div class="summary">
+        <div>
+          <div class="label">Selected Start</div>
+          <div id="startLabel" class="value">—</div>
+        </div>
+        <div>
+          <div class="label">Selected End</div>
+          <div id="endLabel" class="value">—</div>
+        </div>
+        <div>
+          <div class="label">Distance (straight-line)</div>
+          <div id="distLabel" class="value">—</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="map-wrap">
+      <div id="map"></div>
+    </section>
+  </main>
+
+  <dialog id="helpDialog">
+    <h2>How to play — Map Mode</h2>
+    <p>
+      Pick (or randomize) a Start and End bus stop. We’ll show both on the map,
+      draw a line, and display straight-line distance. Use 📍 to set Start to the nearest stop to you.
+      Share a challenge with 🔗 (it encodes stop codes in the URL).
+    </p>
+    <ul>
+      <li><b>R</b> — Randomize </li>
+      <li><b>S</b> — Swap Start/End</li>
+      <li><b>L</b> — Locate nearest Start</li>
+      <li><b>/</b> — Focus search</li>
+    </ul>
+    <form method="dialog">
+      <button class="btn primary">Got it</button>
+    </form>
+  </dialog>
+
+  <div id="toast"></div>
+
+  <script type="module" src="./j.js"></script>
 </body>
 </html>
